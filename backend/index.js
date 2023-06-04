@@ -263,6 +263,27 @@ app.use('/libq/schooladmin/approveuser', approveUser);
 const confirmApprove = require('./SchoolAdmin/confirmapprove.js');
 app.use('/libq/schooladmin/approve', confirmApprove);
 
+app.get('/libq/schooladmin/deleteuser1', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/deleteuser.html'));
+});
+
+// Route to handle the user deletion
+app.post('/delete-user', (req, res) => {
+  const username = req.body.username;
+
+  const sql = `DELETE FROM users WHERE username = ?`;
+  connection.query(sql, [username], (err, result) => {
+      if (err) {
+          console.error('Error deleting user:', err);
+          res.status(500).send('Error deleting user');
+      } else {
+          console.log(`User '${username}' deleted`);
+          res.send(`User '${username}' deleted`);
+      }
+  });
+});
+
+
 
 
 app.listen(PORT, () => {
