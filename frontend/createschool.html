@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Create School Unit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    h3 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #333;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Create School Unit</h1>
+
+  <form action="/libq/generaladmin/createdschool" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="Name" required><br>
+
+    <label for="Adress_street">Address Street:</label>
+    <input type="text" id="Adress_street" name="Adress_street" required><br>
+
+    <label for="Adress_number">Address Number:</label>
+    <input type="text" id="Adress_number" name="Adress_number" required><br>
+
+    <label for="Adress_city">City:</label>
+    <input type="text" id="Adress_city" name="Adress_city" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="Email" required><br>
+
+    <label for="principal">School Principal:</label>
+    <input type="text" id="principal" name="SchoolPrinciple" required><br>
+
+    <label for="admin">School Admin:</label>
+    <input type="text" id="admin" name="SchoolAdmin" required><br>
+
+    <button type="submit">Create</button>
+  </form>
+  <h3><a href="http://localhost:9103/libq/generaladmin">Back to the homepage</a></h3>
+
+</body>
+</html>

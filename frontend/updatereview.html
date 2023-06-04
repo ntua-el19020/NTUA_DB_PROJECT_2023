@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center; /* Added to center the heading */
+
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    textarea,
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    h3 {
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Update Review</h1>
+
+  <form id="updateForm" action="" method="POST">
+    <label for="reviewText">Review Text:</label>
+    <textarea id="reviewText" name="ReviewText" required></textarea>
+
+    <label for="ratingLikert">Rating Likert:</label>
+    <input type="number" id="ratingLikert" name="RatingLikert" required min="1" max="5">
+
+    <button type="submit">Update</button>
+  </form>
+
+  <script src="../backend/user/updatereview.js"></script>
+  <script>
+    // Extract the user ID and ISBN from the URL
+    const url = window.location.href;
+    const urlParams = url.split('/');
+    const userId = urlParams[urlParams.length - 2]; // Assumes the user ID is the second-to-last parameter
+    const isbn = urlParams[urlParams.length - 1]; // Assumes the ISBN is the last parameter
+
+    // Fetch the review data from the server
+    fetch(`/libq/user/updatereview/pika/${userId}/${isbn}`)
+      .then(response => response.json())
+      .then(data => {
+        // Populate the form fields with the existing values
+        document.getElementById('reviewText').value = data.review.ReviewText;
+        document.getElementById('ratingLikert').value = data.review.RatingLikert;
+      })
+      .catch(error => {
+        console.error('Error fetching review data:', error);
+      });
+
+    // Set the form action dynamically with the correct user ID and ISBN
+    const updateForm = document.getElementById('updateForm');
+    updateForm.action = `/libq/user/updatereview/${userId}/${isbn}`;
+  </script>
+  
+  <h3><a href="http://localhost:9103/libq/user">Back to the homepage</a></h3>
+</body>
+</html>

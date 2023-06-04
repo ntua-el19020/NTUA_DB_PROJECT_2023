@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: 4px;
+      width: 300px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .error-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: none;
+      z-index: 9999;
+    }
+
+    .error-popup p {
+      margin: 0;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Registration</h1>
+    <form action="/libq/signup" method="POST">
+      <label for="userType">User Type:</label>
+      <select id="userType" name="userType" required onchange="handleUserTypeChange()">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="birthdate">Birthdate:</label>
+      <input type="date" id="birthdate" name="birthdate" required>
+
+      <label for="school">School:</label>
+      <select id="school" name="school" required>
+        <option value="" selected disabled>Select a school</option>
+      </select>
+      
+      <script>
+        fetch('/libq/schools')
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+            const schoolSelect = document.getElementById('school');
+            data.forEach(school => {
+              const option = document.createElement('option');
+              option.value = school.IdSchool;
+              option.textContent = school.Name;
+              schoolSelect.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching schools:', error);
+          });
+      </script>
+      
+      <label for="addressStreet">Address (Street):</label>
+      <input type="text" id="addressStreet" name="addressStreet" required>
+
+      <label for="addressNumber">Address (Number):</label>
+      <input type="text" id="addressNumber" name="addressNumber" required>
+
+      <label for="addressCity">Address (City):</label>
+      <input type="text" id="addressCity" name="addressCity" required>
+
+      <input type="submit" value="Sign Up">
+    </form>
+  </div>
+
+  <div class="error-popup" id="errorPopup">
+    <p id="errorMessage"></p>
+  </div>
+
+  <script>
+    // Function to populate the school dropdown
+    function populateSchoolDropdown() {
+      const schoolSelect = document.getElementById('school');
+
+      // Show loading message
+      const loadingMessage = document.createElement('option');
+      loadingMessage.textContent = 'Loading Schools...';
+      schoolSelect.appendChild(loadingMessage);
+
+      // Fetch schools from the server
+      fetch('/libq/schools')
+        .then(response => response.json())
+        .then(data => {
+          // Remove loading message
+          schoolSelect.removeChild(loadingMessage);
+
+          // Populate schools
+          data.schools.forEach(school => {
+            const option = document.createElement('option');
+            option.value = school.id;
+            option.textContent = school.name;
+            schoolSelect.appendChild(option);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showError('Failed to fetch schools');
+        });
+    }
+
+    // Call the function to populate the school dropdown when the page is loaded
+    window.addEventListener('load', populateSchoolDropdown);
+  </script>
+</body>
+</html>

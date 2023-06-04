@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Book Copies</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 auto; 
+  margin-bottom: 20px;
+}
+
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Add Book Copies</h1>
+
+  <form id="addBookForm" action="/libq/addbook/:ISBN" method="post">
+    <label for="copies">Number of Copies:</label>
+    <input type="number" id="copies" name="Copies" required>
+
+    <button type="submit">Add Copies</button>
+  </form>
+
+  <script>
+    // Get the current URL
+    const url = window.location.href;
+    // Extract the ISBN value from the URL
+    const isbn = url.split('/').pop();
+    // Set the ISBN value as the action of the form
+    const addBookForm = document.getElementById('addBookForm');
+    addBookForm.action = `/libq/addbook/${isbn}`;
+  </script>
+</body>
+</html>

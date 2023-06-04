@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    h3 {
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Update User</h1>
+
+  <form id="updateForm" action="" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="Name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="Email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="Password" required>
+
+    <button type="submit">Update</button>
+  </form>
+
+  <script src="../backend/user/updateuser.js"></script>
+  <script>
+    // Extract the user ID from the URL
+    const url = window.location.href;
+    const urlParams = url.split('/');
+    const userId = urlParams[urlParams.length - 1]; // Assumes the user ID is the last parameter
+
+    // Fetch the user data from the server
+    fetch(`/libq/user/${userId}`)
+      .then(response => response.json())
+      .then(data => {
+        // Populate the form fields with the existing values
+        document.getElementById('name').value = data.user.PersonName;
+        document.getElementById('email').value = data.user.Email;
+        document.getElementById('password').value = data.user.Password;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    // Handle form submission
+    const updateForm = document.getElementById('updateForm');
+    updateForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Create an object representing the updated user data
+      const updatedUser = {
+        Name: document.getElementById('name').value,
+        Email: document.getElementById('email').value,
+        Password: document.getElementById('password').value
+      };
+
+      // Send a PUT request to update the user data
+      fetch(`/libq/user/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Display a success message
+          const message = document.createElement('h3');
+          message.textContent = data.message;
+          document.body.appendChild(message);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Borrowings Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search-container label {
+      font-weight: bold;
+    }
+
+    .search-container select {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #808285;
+      color: #fff;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .back-button::before {
+      content: '←';
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Borrowings Search</h1>
+    <div class="search-container">
+      <form id="search-form">
+        <label for="YEAR">YEAR:</label>
+        <select name="YEAR">
+          <option value=""></option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+        </select>
+        <label for="MONTH">MONTH:</label>
+        <select name="MONTH">
+          <option value=""></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+
+        </select>      
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>School Name</th>
+          <th>Total Borrowings</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+
+    <div class="back-link">
+      <a href="http://localhost:9103/libq/generaladmin" class="back-button">Back to the homepage</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('search-form');
+    const resultsContainer = document.getElementById('results');
+
+    const search = async (YEAR, MONTH) => {
+      // Build the query string with search parameters
+      const queryParams = new URLSearchParams({
+        YEAR,
+        MONTH,
+      });
+
+      try {
+        // Fetch the search results from the server
+        const response = await fetch(`/libq/generaladmin/borrowings?${queryParams}`);
+        const data = await response.json();
+
+        // Clear previous results
+        resultsContainer.innerHTML = '';
+
+        // Display the search results in the table
+        for (const item of data) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item['SchoolName']}</td>
+            <td>${item['TotalBorrowings']}</td>
+          `;
+          resultsContainer.appendChild(row);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Get the form inputs
+      const YEAR = form.YEAR.value;
+      const MONTH = form.MONTH.value;
+
+      search(YEAR, MONTH);
+    });
+
+    // Trigger the search on page load
+    search('', '');
+  </script>
+</body>
+</html>

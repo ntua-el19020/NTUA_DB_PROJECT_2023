@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Book</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Update Book</h1>
+
+  <form id="updateForm" action="/libq/schooladmin/editbook/" method="POST">
+    <label for="Title">Title:</label>
+    <input type="text" id="Title" name="Title" required><br>
+
+    <label for="Publisher">Publisher:</label>
+    <input type="text" id="Publisher" name="Publisher" required><br>
+
+    <label for="PageNumber">Page Number:</label>
+    <input type="text" id="PageNumber" name="PageNumber" required><br>
+
+    <label for="Summary">Summary:</label>
+    <textarea id="Summary" name="Summary" required></textarea><br>
+
+    <label for="Picture">Picture:</label>
+    <input type="text" id="Picture" name="Picture" required><br>
+
+    <label for="Language">Language:</label>
+    <input type="text" id="Language" name="Language" required><br>
+
+    <label for="Copies">Copies:</label>
+    <input type="number" id="Copies" name="Copies" required><br>
+
+    <label for="Categories">Categories:</label>
+    <input type="text" id="Categories" name="Categories" required><br>
+
+    <button type="submit">Update</button>
+  </form>
+
+  <script src="../backend/SchoolAdmin/editbook.js"></script>
+  <script>
+    // Extract the book's ISBN from the URL
+    const url = window.location.href;
+    const ISBN = url.split('/').pop();
+  
+    // Fetch the book data from the server
+    fetch(`/libq/schooladmin/editbook/pika/${ISBN}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Response data:', data); // Log the response data for troubleshooting
+        // Populate the form fields with the existing values
+        document.getElementById('Title').value = data.Book.Title;
+        document.getElementById('Publisher').value = data.Book.Publisher;
+        document.getElementById('PageNumber').value = data.Book.PageNumber;
+        document.getElementById('Summary').value = data.Book.Summary;
+        document.getElementById('Picture').value = data.Book.Picture;
+        document.getElementById('Language').value = data.Book.Language;
+        document.getElementById('Copies').value = data.Book.Copies;
+        document.getElementById('Categories').value = data.Book.Categories;
+      })
+      .catch(error => {
+        console.error('Error fetching book data:', error);
+      });
+  
+    // Set the form action dynamically with the correct book's ISBN
+    const updateForm = document.getElementById('updateForm');
+    updateForm.action = `/libq/schooladmin/editbook/${ISBN}`;
+  </script>
+</body>
+</html>

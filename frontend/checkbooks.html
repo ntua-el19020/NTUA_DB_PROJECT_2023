@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pecaboooooooooo</title>
+  <style>
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-width: 500px;
+  width: 90%;
+}
+
+.popup-content {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.popup-close:hover {
+  color: #555;
+}
+
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+      border-radius: 4px;
+      background-color: #f1f3f4;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #e0e0e0;
+    }
+
+    .logout-link {
+      color: #fff;
+      background-color: #db4437;
+    }
+
+    .logout-link:hover {
+      background-color: #c81912;
+    }
+
+    /* CSS for the table and scrolling */
+    #results-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-gap: 20px;
+    }
+
+    .book-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .book-card img {
+      width: 100%;
+      cursor: pointer;
+      height: 200px; /* Set the height of the book cover image */
+      object-fit: cover; /* Ensure the image covers the entire space without distortion */
+    }
+
+    .book-card h2 {
+      margin-top: 10px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .book-card p {
+      margin: 5px 0;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .summary {
+      display: none;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .categories {
+      margin-top: 10px;
+    }
+
+    .category {
+      display: inline-block;
+      background-color: #ddd;
+      padding: 2px 5px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+
+    .edit-button {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      padding: 8px 16px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+
+    /* CSS for the form inputs */
+    .search-form input[type="text"],
+    .search-form select {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 300px;
+      margin-bottom: 10px;
+    }
+
+    .search-form button[type="submit"],
+    .choose-button {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  vertical-align: top;
+  width: 50px; /* Adjust the width to the desired value */
+  margin-left: 10px; /* Add margin between the search and choose buttons */
+  box-sizing: content-box; /* Ensure the padding is not included in the width */
+}
+
+    /* Add the same hover effect as the search button */
+    .choose-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Check all the Books</h1>
+  <form class="search-form" id="search-form">
+    <input type="text" name="Title" placeholder="Title">
+    <label for="Category">Category:</label>
+    <select name="Category">
+      <option value="">No category chosen</option>
+      <option value="Ιστορία (History)">Ιστορία (History)</option>
+      <option value="Μυθιστόρημα (Novel)">Μυθιστόρημα (Novel)</option>
+      <option value="Φαντασία (Fantasy)">Φαντασία (Fantasy)</option>
+      <option value="Μυστήριο (Mystery)">Μυστήριο (Mystery)</option>
+      <option value="Θρίλερ (Thriller)">Θρίλερ (Thriller)</option>
+      <option value="Ρομαντικό (Romance)">Ρομαντικό (Romance)</option>
+      <option value="Ποίηση (Poetry)">Ποίηση (Poetry)</option>
+      <option value="Διηγήματα (Short Stories)">Διηγήματα (Short Stories)</option>
+      <option value="Αυτοβελτίωση (Self-Improvement)">Αυτοβελτίωση (Self-Improvement)</option>
+      <option value="Θρησκεία (Religion)">Θρησκεία (Religion)</option>
+      <option value="Φιλοσοφία (Philosophy)">Φιλοσοφία (Philosophy)</option>
+      <option value="Ψυχολογία (Psychology)">Ψυχολογία (Psychology)</option>
+      <option value="Παιδικά βιβλία (Childrens Books)">Παιδικά βιβλία (Children's Books)</option>
+      <option value="Ταξίδια (Travel)">Ταξίδια (Travel)</option>
+      <option value="Τέχνη (Art)">Τέχνη (Art)</option>
+      <option value="Αρχιτεκτονική (Architecture)">Αρχιτεκτονική (Architecture)</option>
+      <option value="Μαγειρική (Cooking)">Μαγειρική (Cooking)</option>
+      <option value="Αθλητισμός (Sports)">Αθλητισμός (Sports)</option>
+      <option value="Επιστημονικά (Science)">Επιστημονικά (Science)</option>
+      <option value="Οικονομία (Economics)">Οικονομία (Economics)</option>
+      <option value="Πολιτική (Politics)">Πολιτική (Politics)</option>
+      <option value="Βιογραφίες (Biographies)">Βιογραφίες (Biographies)</option>
+      <option value="Μαθηματικά (Mathematics)">Μαθηματικά (Mathematics)</option>
+      <option value="Γλωσσολογία (Linguistics)">Γλωσσολογία (Linguistics)</option>
+      <option value="Εκπαίδευση (Education)">Εκπαίδευση (Education)</option>
+      <option value="Περιβάλλον (Environment)">Περιβάλλον (Environment)</option>
+      <option value="Κοινωνιολογία (Sociology)">Κοινωνιολογία (Sociology)</option>
+      <option value="Μουσική (Music)">Μουσική (Music)</option>
+      <option value="Δικαίωμα (Law)">Δικαίωμα (Law)</option>
+      <option value="Επιστημονική Φαντασία (Science Fiction)">Επιστημονική Φαντασία (Science Fiction)</option>
+      <option value="Φανταστική Νεανική Λογοτεχνία (Young Adult Fantasy)">Φανταστική Νεανική Λογοτεχνία (Young Adult Fantasy)</option>
+      <option value="Ιστορικό Μυθιστόρημα (Historical Novel)">Ιστορικό Μυθιστόρημα (Historical Novel)</option>
+      <option value="Πολεμική Λογοτεχνία (War Literature)">Πολεμική Λογοτεχνία (War Literature)</option>
+      <option value="Αστυνομική Λογοτεχνία (Crime Fiction)">Αστυνομική Λογοτεχνία (Crime Fiction)</option>
+      <option value="Επιστημονική Διαφήμιση (Science Non-Fiction)">Επιστημονική Διαφήμιση (Science Non-Fiction)</option>
+      <option value="Αυτοβιογραφία (Autobiography)">Αυτοβιογραφία (Autobiography)</option>
+      <option value="Μαγικό Ρεαλισμό (Magical Realism)">Μαγικό Ρεαλισμό (Magical Realism)</option>
+      <option value="Θρησκευτική Λογοτεχνία (Religious Literature)">Θρησκευτική Λογοτεχνία (Religious Literature)</option>
+      <option value="Κλασική Λογοτεχνία (Classic Literature)">Κλασική Λογοτεχνία (Classic Literature)</option>
+      <option value="Περιπέτεια (Adventure)">Περιπέτεια (Adventure)</option>
+      <option value="Παραμύθια (Fairy Tales)">Παραμύθια (Fairy Tales)</option>
+      <option value="Μυθολογία (Mythology)">Μυθολογία (Mythology)</option>
+      <option value="Τραγωδία (Tragedy)">Τραγωδία (Tragedy)</option>
+      <option value="Κωμωδία (Comedy)">Κωμωδία (Comedy)</option>
+      <option value="Θέατρο (Theater)">Θέατρο (Theater)</option>
+      <option value="Τεχνολογία (Technology)">Τεχνολογία (Technology)</option>
+      <option value="Επιστήμη της Υγείας (Health Science)">Επιστήμη της Υγείας (Health Science)</option>
+      <option value="Περιπλανήσεις (Journeys)">Περιπλανήσεις (Journeys)</option>
+      <option value="Πολιτισμολογία (Cultural Studies)">Πολιτισμολογία (Cultural Studies)</option>
+    </select>  
+    <input type="text" name="Publisher" placeholder="Publisher">
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="results-container"></div>
+
+  <script>
+    const form = document.getElementById('search-form');
+    const resultsContainer = document.getElementById('results-container');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      searchBooks();
+    });
+
+    async function searchBooks() {
+      // Get the form inputs
+      const Category = form.Category.value;
+      const Title = form.Title.value;
+      const Publisher = form.Publisher.value;
+
+      // Build the query string with search parameters
+      const queryParams = new URLSearchParams();
+      queryParams.append('Category', Category);
+      queryParams.append('Title', Title);
+      queryParams.append('Publisher', Publisher);
+
+      try {
+        // Fetch the search results from the server
+        const response = await fetch(`/libq/user/checkbooks?${queryParams.toString()}`);
+        const data = await response.json();
+
+        // Clear previous results
+        resultsContainer.innerHTML = '';
+
+        // Display the search results as book cards
+        for (const item of data) {
+          const card = document.createElement('div');
+          card.classList.add('book-card');
+          card.setAttribute('data-isbn', item['ISBN']); // Add the data-isbn attribute
+          card.innerHTML = `
+            <img src="${item['Picture']}" alt="Book Image" onclick="toggleSummary(this)">
+            <h2>${item['Title']}</h2>
+            <p><strong>Publisher:</strong> ${item['Publisher']}</p>
+            <p><strong>No. of Pages:</strong> ${item['PageNumber']}</p>
+            <p class="summary" style="display: none;"><strong>Summary:</strong> ${item['Summary']}</p>
+            <p><strong>Language:</strong> ${item['Language']}</p>
+            <p><strong>Rating:</strong> ${item['Rating']}</p>
+            <div class="categories">
+                <strong>Categories:</strong>
+                ${item['Categories'].split(',').map(category => `<span class="category">${category}</span>`).join('')}
+            </div>
+            <form method="POST" action="/libq/user/choosebook">
+                <input type="hidden" name="ISBN" value="${item['ISBN']}">
+                <button type="submit" style="padding: 6px 6px; font-size: 12px; font-weight: bold; text-decoration: none; background-color: #4CAF50; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; vertical-align: top; width: 50px; margin-left: 10px; box-sizing: content-box;">Choose</button>
+            </form>          `;
+
+          resultsContainer.appendChild(card);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Trigger the search when the page loads
+    searchBooks();
+
+// Declare a variable to store the reference to the popup element
+let popup = null;
+
+function toggleSummary(image) {
+  const card = image.parentNode;
+  const summary = card.querySelector('.summary');
+
+  // Check if the popup is already open
+  if (popup) {
+    // If the popup is open, close it
+    closePopup();
+  } else {
+    // If the popup is not open, create and display it
+    popup = document.createElement('div');
+    popup.classList.add('popup');
+    const content = document.createElement('div');
+    content.classList.add('popup-content');
+    content.innerHTML = `
+      <span class="popup-close" onclick="closePopup()">&times;</span>
+      <p>${summary.innerText}</p>
+    `;
+    popup.appendChild(content);
+    document.body.appendChild(popup);
+  }
+}
+
+function closePopup() {
+  // Remove the popup element from the DOM and reset the variable
+  popup.remove();
+  popup = null;
+}
+
+
+  </script>
+  <h3><a href="http://localhost:9103/libq/user">Back to the homepage</a></h3>
+</body>
+</html>

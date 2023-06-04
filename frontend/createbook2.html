@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create New Book</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: calc(100% - 12px); /* Adjust the width to leave some space on the right side */
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button[type="submit"] {
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Create New Book</h1>
+
+  <form id="createBookForm" action="/libq/createbook2" method="post">
+    <label for="ISBN">ISBN:</label>
+    <input type="text" id="ISBN" name="ISBN" required>
+
+    <label for="Title">Title:</label>
+    <input type="text" id="Title" name="Title" required>
+
+    <label for="Publisher">Publisher:</label>
+    <input type="text" id="Publisher" name="Publisher" required>
+
+    <label for="PageNumber">Page Number:</label>
+    <input type="number" id="PageNumber" name="PageNumber" required>
+
+    <label for="Summary">Summary:</label>
+    <textarea id="Summary" name="Summary" required></textarea>
+
+    <label for="Picture">Picture:</label>
+    <input type="text" id="Picture" name="Picture" required>
+
+    <label for="Language">Language:</label>
+    <input type="text" id="Language" name="Language" required>
+
+    <label for="Copies">Copies:</label>
+    <input type="text" id="Copies" name="Copies" required>
+
+    <label for="Category">One Category:</label>
+    <input type="text" id="Category" name="Category" required>
+
+    <button type="submit">Create Book</button>
+  </form>
+</body>
+</html>

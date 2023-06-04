@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>General Admin Homepage</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 4px;
+            background-color: #f1f3f4;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .logout-link {
+            color: #fff;
+            background-color: #db4437;
+        }
+
+        .logout-link:hover {
+            background-color: #c81912;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1>Welcome General Admin!</h1>
+        
+        <hr>
+        
+        <h2>What would you like to do today?</h2>
+        <ul>
+            <li><h3>CRUD Operations:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/generaladmin/viewschools">View School Units</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/SaApplications">See the pending School Admin applications</a></li>
+                </ul>
+            </li>
+            <li><h3>Database Back-up / Restoration:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/backup">Create a back-up of the entire database</a></li>
+                    <li><a href="http://localhost:9103/libq/restore">Restore the system from your saved back-up</a></li>
+                </ul>
+            </li>
+            <li><h3>Data Queries and Visualization:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/generaladmin/borrowings1">Watch the list with the total number of loans per school</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/givenbookcategory1">For a given book category, find which authors have written books that belong to it and which teachers have borrowed books from that category in the last year</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/youngteachers">Check which young teachers have borrowed the most books</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/unluckywriters">Check which are the unlucky authors whose books have not been borrowed</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/top3categories">Check the top-3 pairs of book categories that appeared most in borrowings</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/busywriters">Check which authors have written at least 5 books less than the author with the most books</a></li>
+                    <li><a href="http://localhost:9103/libq/generaladmin/borrowingsperyear">Find out which School Admins have loaned the same number of books in a year with more than 20 loans</a></li>
+                </ul>
+            </li>
+            <li><h3>Account Management:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/generaladmin/changepassword1">Change password</a></li>
+                </ul>
+            </li>
+        </ul>
+        
+        <h3 style="text-align: center;"><a href="http://localhost:9103/libq" class="logout-link">Logout</a></h3>
+    </div>
+</body>
+</html>

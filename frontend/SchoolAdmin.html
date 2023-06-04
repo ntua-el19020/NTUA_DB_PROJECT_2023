@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>School Admin Homepage</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 4px;
+            background-color: #f1f3f4;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .logout-link {
+            color: #fff;
+            background-color: #db4437;
+        }
+
+        .logout-link:hover {
+            background-color: #c81912;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1>Welcome School Admin!</h1>
+        
+        <hr>
+        
+        <h2>What would you like to do today?</h2>
+        <ul>
+            <li><h3>Data Analysis:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/schooladmin/viewbooks1">See all books in the school library</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/lateborrowings">Late Rentals</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/reviewaverages">Review Averages</a></li>
+                </ul>
+            </li>
+            <li><h3>User Management:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/schooladmin/approvereservations">Approve Users' Lend Requests</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/inputrental">Input a Rental using Username and Book Title</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/submitreturns">Submit Returns of Books</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/approveuser">Approve User Sign-up's</a></li>
+                    <li><a href="http://localhost:9103/libq/schooladmin/approvereview">Approve User Reviews</a></li>
+                </ul>
+            </li>
+            <li><h3>Account Management:</h3>
+                <ul>
+                    <li><a href="http://localhost:9103/libq/schooladmin/changepassword1">Change password</a></li>
+                </ul>
+            </li>
+        </ul>
+        
+        
+        <h3 style="text-align: center;"><a href="http://localhost:9103/libq" class="logout-link">Logout</a></h3>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Query Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #results-container {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+
+    #results-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    #results-table th,
+    #results-table td {
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+
+    #results-table th {
+      background-color: #808285;
+      color: #fff;
+    }
+
+    #results-table th:first-child {
+      width: 40%;
+    }
+
+    #results-table th:nth-child(2) {
+      width: 60%;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Find out which School Admins have loaned the same number of books in a year with more than 20 loans!</h1>
+
+  <div id="results-container">
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th>Number of Borrowed Books</th>
+          <th>List of School Admins</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const resultsContainer = document.getElementById('results');
+
+    async function fetchData() {
+      try {
+        const response = await fetch(`/libq/generaladmin/borrowingsperyear`);
+        const data = await response.json();
+
+        resultsContainer.innerHTML = '';
+
+        for (const book of data) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${book.NumBorrowedBooks}</td>
+            <td>${book.SchoolAdminList}</td>
+          `;
+          resultsContainer.appendChild(row);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  </script>
+
+  <div class="back-link">
+    <a href="http://localhost:9103/libq/generaladmin">Back to the homepage</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Borrowings Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search-container label {
+      font-weight: bold;
+    }
+
+    .search-container select {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #808285;
+      color: #fff;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .back-button::before {
+      content: '←';
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Book Category</h1>
+    <div class="search-container">
+      <form id="search-form">
+        <label for="Category">Category:</label>
+        <select name="Category">
+          <option value="Ιστορία (History)">Ιστορία (History)</option>
+          <option value="Μυθιστόρημα (Novel)">Μυθιστόρημα (Novel)</option>
+          <option value="Φαντασία (Fantasy)">Φαντασία (Fantasy)</option>
+          <option value="Μυστήριο (Mystery)">Μυστήριο (Mystery)</option>
+          <option value="Θρίλερ (Thriller)">Θρίλερ (Thriller)</option>
+          <option value="Ρομαντικό (Romance)">Ρομαντικό (Romance)</option>
+          <option value="Ποίηση (Poetry)">Ποίηση (Poetry)</option>
+          <option value="Διηγήματα (Short Stories)">Διηγήματα (Short Stories)</option>
+          <option value="Αυτοβελτίωση (Self-Improvement)">Αυτοβελτίωση (Self-Improvement)</option>
+          <option value="Θρησκεία (Religion)">Θρησκεία (Religion)</option>
+          <option value="Φιλοσοφία (Philosophy)">Φιλοσοφία (Philosophy)</option>
+          <option value="Ψυχολογία (Psychology)">Ψυχολογία (Psychology)</option>
+          <option value="Παιδικά βιβλία (Childrens Books)">Παιδικά βιβλία (Children's Books)</option>
+          <option value="Ταξίδια (Travel)">Ταξίδια (Travel)</option>
+          <option value="Τέχνη (Art)">Τέχνη (Art)</option>
+          <option value="Αρχιτεκτονική (Architecture)">Αρχιτεκτονική (Architecture)</option>
+          <option value="Μαγειρική (Cooking)">Μαγειρική (Cooking)</option>
+          <option value="Αθλητισμός (Sports)">Αθλητισμός (Sports)</option>
+          <option value="Επιστημονικά (Science)">Επιστημονικά (Science)</option>
+          <option value="Οικονομία (Economics)">Οικονομία (Economics)</option>
+          <option value="Πολιτική (Politics)">Πολιτική (Politics)</option>
+          <option value="Βιογραφίες (Biographies)">Βιογραφίες (Biographies)</option>
+          <option value="Μαθηματικά (Mathematics)">Μαθηματικά (Mathematics)</option>
+          <option value="Γλωσσολογία (Linguistics)">Γλωσσολογία (Linguistics)</option>
+          <option value="Εκπαίδευση (Education)">Εκπαίδευση (Education)</option>
+          <option value="Περιβάλλον (Environment)">Περιβάλλον (Environment)</option>
+          <option value="Κοινωνιολογία (Sociology)">Κοινωνιολογία (Sociology)</option>
+          <option value="Μουσική (Music)">Μουσική (Music)</option>
+          <option value="Δικαίωμα (Law)">Δικαίωμα (Law)</option>
+          <option value="Επιστημονική Φαντασία (Science Fiction)">Επιστημονική Φαντασία (Science Fiction)</option>
+          <option value="Φανταστική Νεανική Λογοτεχνία (Young Adult Fantasy)">Φανταστική Νεανική Λογοτεχνία (Young Adult Fantasy)</option>
+          <option value="Ιστορικό Μυθιστόρημα (Historical Novel)">Ιστορικό Μυθιστόρημα (Historical Novel)</option>
+          <option value="Πολεμική Λογοτεχνία (War Literature)">Πολεμική Λογοτεχνία (War Literature)</option>
+          <option value="Αστυνομική Λογοτεχνία (Crime Fiction)">Αστυνομική Λογοτεχνία (Crime Fiction)</option>
+          <option value="Επιστημονική Διαφήμιση (Science Non-Fiction)">Επιστημονική Διαφήμιση (Science Non-Fiction)</option>
+          <option value="Αυτοβιογραφία (Autobiography)">Αυτοβιογραφία (Autobiography)</option>
+          <option value="Μαγικό Ρεαλισμό (Magical Realism)">Μαγικό Ρεαλισμό (Magical Realism)</option>
+          <option value="Θρησκευτική Λογοτεχνία (Religious Literature)">Θρησκευτική Λογοτεχνία (Religious Literature)</option>
+          <option value="Κλασική Λογοτεχνία (Classic Literature)">Κλασική Λογοτεχνία (Classic Literature)</option>
+          <option value="Περιπέτεια (Adventure)">Περιπέτεια (Adventure)</option>
+          <option value="Παραμύθια (Fairy Tales)">Παραμύθια (Fairy Tales)</option>
+          <option value="Μυθολογία (Mythology)">Μυθολογία (Mythology)</option>
+          <option value="Τραγωδία (Tragedy)">Τραγωδία (Tragedy)</option>
+          <option value="Κωμωδία (Comedy)">Κωμωδία (Comedy)</option>
+          <option value="Θέατρο (Theater)">Θέατρο (Theater)</option>
+          <option value="Τεχνολογία (Technology)">Τεχνολογία (Technology)</option>
+          <option value="Επιστήμη της Υγείας (Health Science)">Επιστήμη της Υγείας (Health Science)</option>
+          <option value="Περιπλανήσεις (Journeys)">Περιπλανήσεις (Journeys)</option>
+          <option value="Πολιτισμολογία (Cultural Studies)">Πολιτισμολογία (Cultural Studies)</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Writer Name</th>
+          <th>Teacher Name</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+
+    <h3><a href="http://localhost:9103/libq/generaladmin" class="back-button">Back to the homepage</a></h3>
+  </div>
+
+  
+  <script>
+    const form = document.getElementById('search-form');
+    const resultsContainer = document.getElementById('results');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Get the form inputs
+      const Category = form.Category.value;
+
+      // Build the query string with search parameters
+      const queryParams = new URLSearchParams();
+      queryParams.append('Category', Category);
+
+      try {
+        // Fetch the search results from the server
+        const response = await fetch(`/libq/generaladmin/givenbookcategory?${queryParams.toString()}`);
+        const data = await response.json();
+
+        // Clear previous results
+        resultsContainer.innerHTML = '';
+
+        // Display the search results in the table
+        for (const item of data) {
+          const writerNames = item['FirstColumn'] ? item['FirstColumn'].split(', ') : [''];
+          const teacherNames = item['SecondColumn'] ? item['SecondColumn'].split(', ') : [''];
+
+          // Determine the maximum number of rows required based on the longer list
+          const maxRows = Math.max(writerNames.length, teacherNames.length);
+
+          for (let i = 0; i < maxRows; i++) {
+            const writerName = writerNames[i] || '';
+            const teacherName = teacherNames[i] || '';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${writerName}</td>
+              <td>${teacherName}</td>
+            `;
+            resultsContainer.appendChild(row);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

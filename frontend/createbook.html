@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #carousel-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin: 0 -10px;
+    }
+
+    .carousel-item {
+      flex: 0 0 auto;
+      margin: 0 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .carousel-item h2,
+    .carousel-item p {
+      margin: 5px 0;
+    }
+
+    .carousel-item img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .add-button {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .add-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Do you want to add one of these books in your School library? </h1>
+
+  <div id="carousel-container"></div>
+
+  <script>
+    const carouselContainer = document.getElementById('carousel-container');
+
+    fetch('/libq/createbook') // Replace with your server endpoint
+      .then(response => response.json())
+      .then(data => {
+        // Loop through the data and create carousel items
+        data.forEach(book => {
+          const carouselItem = document.createElement('div');
+          carouselItem.classList.add('carousel-item');
+          carouselItem.innerHTML = `
+            <img src="${book.Picture}" alt="Book Image">
+            <h2>${book.Title}</h2>
+            <p>${book.ISBN}</p>
+            <p>${book.Publisher}</p>
+            <p>${book.PageNumber}</p>
+            <p>${book.Language}</p>
+            <button class="add-button" onclick="addBook('${book.ISBN}')">Add Book</button>
+          `;
+
+          carouselContainer.appendChild(carouselItem);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    function addBook(isbn) {
+      // Redirect to the add book page with the appropriate ISBN parameter
+      window.location.href = `/libq/schooladmin/addbook1/${isbn}`;
+    }
+
+    
+    function create(isbn) {
+      // Redirect to the add book page with the appropriate ISBN parameter
+      window.location.href = `/libq/createbook/create`;
+    }
+  </script>
+        <h2>The book you were looking for doesn't exist in your school's e-library? Find it here and add it yourself! </h2>
+        <h2>If the book you wish to add isn't already in our database, you can add it yourself.</h2>
+        <button class="add-button" style="text-align: center;" onclick="create('${book.ISBN}')">Create Book</button>
+</body>
+</html>

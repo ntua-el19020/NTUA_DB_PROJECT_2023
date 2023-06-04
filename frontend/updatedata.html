@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update User Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    h3 {
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Update User Data</h1>
+
+  <form id="updateForm" action="" method="POST">
+    <label for="PersonName">Name:</label>
+    <input type="text" id="PersonName" name="PersonName" required>
+
+    <label for="PersonEmail">Email:</label>
+    <input type="email" id="PersonEmail" name="PersonEmail" required>
+
+    <label for="Adress_street">Address street:</label>
+    <input type="text" id="Adress_street" name="Adress_street" required>
+
+    <label for="Adress_number">Address number:</label>
+    <input type="text" id="Adress_number" name="Adress_number" required>
+
+    <label for="Adress_city">City:</label>
+    <input type="text" id="Adress_city" name="Adress_city" required>
+
+    <label for="BirthDate">BirthDate:</label>
+    <input type="date" id="BirthDate" name="BirthDate" required>
+
+    <button type="submit">Update</button>
+  </form>
+
+  <h3><a href="http://localhost:9103/libq/generaladmin">Back to the homepage</a></h3>
+
+  <script src="../backend/user/updatedata.js"></script>
+  <script>
+    // Extract the user ID and ISBN from the URL
+    const url = window.location.href;
+    const urlParams = url.split('/');
+    const userId = urlParams[urlParams.length - 1]; // Assumes the user ID is the last parameter
+
+    // Fetch the user data from the server
+    fetch(`/libq/user/updatedata/pika/${userId}`)
+      .then(response => response.json())
+      .then(data => {
+        // Populate the form fields with the existing values
+        document.getElementById('PersonName').value = data.Person.PersonName;
+        document.getElementById('PersonEmail').value = data.Person.PersonEmail;
+        document.getElementById('Adress_street').value = data.Person.Adress_street;
+        document.getElementById('Adress_number').value = data.Person.Adress_number;
+        document.getElementById('Adress_city').value = data.Person.Adress_city;
+        document.getElementById('BirthDate').value = data.Person.BirthDate;
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+
+    // Set the form action dynamically with the correct user ID
+    const updateForm = document.getElementById('updateForm');
+    updateForm.action = `/libq/user/updatedata/${userId}`;
+  </script>
+</body>
+</html>
