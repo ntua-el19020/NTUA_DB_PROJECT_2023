@@ -285,6 +285,71 @@ router.get('/', function (req, res) {
                             html += `
                 </table>
                 <div style="text-align: center; margin-top: 20px;">
+                  <title>Average Rating Query</title>
+                  <style>
+                    body {
+                      font-family: Arial, sans-serif;
+                      margin: 0;
+                      padding: 20px;
+                      background-color: #f2f2f2;
+                    }
+            
+                    h1 {
+                      text-align: center;
+                      margin-bottom: 20px;
+                    }
+            
+                    form {
+                      width: 300px;
+                      margin: 0 auto;
+                      background-color: #fff;
+                      padding: 20px;
+                      border-radius: 5px;
+                      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+            
+                    label {
+                      display: block;
+                      margin-bottom: 10px;
+                    }
+            
+                    input[type="text"] {
+                      width: 100%;
+                      padding: 10px;
+                      font-size: 16px;
+                      border-radius: 3px;
+                      border: 1px solid #ccc;
+                    }
+            
+                    input[type="submit"] {
+                      width: 100%;
+                      padding: 10px;
+                      font-size: 16px;
+                      background-color: #4CAF50;
+                      color: #fff;
+                      border: none;
+                      border-radius: 3px;
+                      cursor: pointer;
+                    }
+            
+                    input[type="submit"]:hover {
+                      background-color: #45a049;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <h1>Average Rating Query</h1>
+                  <form action="/libq/schooladmin/reviewaverages/secondoption" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" name="category" required>
+                    
+                    <input type="submit" value="Submit">
+                  </form>
+
+
                   <a href="/libq/schooladmin" class="back-button">Back to Home Page</a>
                 </div>
               </div>
@@ -300,5 +365,75 @@ router.get('/', function (req, res) {
         });
     });
 });
+
+router.post('/secondoption', (req, res) => {
+  const personName = req.body.name;
+  const bookCategory = req.body.category;
+
+  pool.getConnection(function (err, connection) {
+    if (err) {
+        console.error('Error getting database connection:', err);
+        res.status(500).json({ error: 'An error occurred while getting a database connection' });
+        return;
+    }
+
+  // Execute the query
+  const query = `
+    SELECT AVG(b.Rating) AS AverageRating
+    FROM book b
+    JOIN book_categories bc ON b.ISBN = bc.ISBN
+    JOIN Persons_Per_School_View ppsv ON ppsv.PersonName = ?
+    WHERE bc.Category = ?
+  `;
+
+  connection.query(query, [personName, bookCategory], (error, results) => {
+    if (error) {
+      console.error('Error executing query: ', error);
+      res.send('Error executing query');
+      return;
+    }
+
+    const averageRating = results[0].AverageRating;
+
+    res.send(`
+      <html>
+        <head>
+          <title>Average Rating Query</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 20px;
+              background-color: #f2f2f2;
+            }
+  
+            h1 {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+  
+            .result {
+              width: 300px;
+              margin: 0 auto;
+              background-color: #fff;
+              padding: 20px;
+              border-radius: 5px;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              text-align: center;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Average Rating Query</h1>
+          <div class="result">
+            The average rating for ${personName} in the ${bookCategory} category is ${averageRating}
+          </div>
+        </body>
+      </html>
+    `);
+  });
+});
+});
+
 
 module.exports = router;
