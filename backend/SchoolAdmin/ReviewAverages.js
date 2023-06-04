@@ -376,6 +376,33 @@ router.post('/secondoption', (req, res) => {
         res.status(500).json({ error: 'An error occurred while getting a database connection' });
         return;
     }
+    const query1=
+    `
+    CREATE OR REPLACE VIEW Persons_Per_School_View AS
+    SELECT  'Student' AS PersonType, st.IdUsers AS PersonId, st.StudentName AS PersonName, st.StudentEmail AS PersonEmail 
+    , st.Adress_street as Adress_street,st.Adress_number as Adress_number, st.Adress_city as Adress_city,st.BirthDate as BirthDate, u.username as  username, u.password as password
+    FROM Student st
+    JOIN SchoolAdmin sa ON st.IdSchool = sa.IdSchool
+    JOIN SchoolUnit s ON sa.IdSchool = s.IdSchool
+    join users u on u.idusers=st.idusers
+    UNION ALL
+    SELECT  'Teacher' AS PersonType, t.IdUsers AS PersonId, t.TeacherName AS PersonName, t.TeacherEmail AS PersonEmail
+    , t.Adress_street as Adress_street,t.Adress_number as Adress_number, t.Adress_city as Adress_city,t.BirthDate as BirthDate, u.username as  username, u.password as password
+    FROM Teacher t
+    JOIN SchoolAdmin sa ON t.IdSchool = sa.IdSchool
+    JOIN SchoolUnit s ON sa.IdSchool = s.IdSchool
+    join users u on u.idusers=t.idusers`;
+    
+    
+    connection.query(query1, (err, results) => {
+        if (err) {
+          console.error('Error executing query:', err);
+          res.status(500).json({ error: 'An error occurred while executing the query' });
+          return;
+        }
+
+
+
 
   // Execute the query
   const query = `
@@ -434,6 +461,8 @@ router.post('/secondoption', (req, res) => {
   });
 });
 });
+});
+
 
 
 module.exports = router;
