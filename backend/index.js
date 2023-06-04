@@ -26,6 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Serve the login page
+
+app.get('/libq', function (req, res) {
+  res.sendFile(path.join(__dirname, '../frontend/startpage.html'));
+});
+
 app.get('/libq/login', function (req, res) {
   res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
@@ -40,10 +45,6 @@ app.get('/libq/user/checkbooks1', (req, res) => {
 
 app.get('/libq/schooladmin/viewbooks1', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/viewbooks.html'));
-});
-
-app.get('/libq/schooladmin/meanratings1', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/meanratings.html'));
 });
 
 app.get('/libq/generaladmin', function (req, res) {
@@ -118,9 +119,6 @@ app.use('/libq/login', login);
 
 const addbook = require('./SchoolAdmin/addbook.js');
 app.use('/libq/addbook', addbook);
-
-const meanrating = require('./SchoolAdmin/meanratings.js');
-app.use('/libq/schooladmin/meanratings', meanrating);
 
 const chgpaswd = require('./GeneralAdmin/changepassword.js');
 app.use('/libq/generaladmin/changepassword', chgpaswd);
@@ -249,8 +247,6 @@ const create2book = require('./SchoolAdmin/createbook2.js');
 app.use('/libq/createbook2',create2book);
 
 
-
-
 const password = require('./user/changepassword.js');
 app.use('/libq/user/changepassword',password);
 
@@ -260,6 +256,13 @@ app.use('/libq/user/updatedata',updatedata);
 
 const viewdata = require('./user/viewdata.js');
 app.use('/libq/user/viewdata', viewdata);
+
+const approveUser = require('./SchoolAdmin/approveUser.js');
+app.use('/libq/schooladmin/approveuser', approveUser);
+
+const confirmApprove = require('./SchoolAdmin/confirmapprove.js');
+app.use('/libq/schooladmin/approve', confirmApprove);
+
 
 app.get('/libq/schooladmin/deleteuser1', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/deleteuser.html'));
@@ -274,10 +277,16 @@ app.post('/delete-user', (req, res) => {
       if (err) {
           console.error('Error deleting user:', err);
           res.status(500).send('Error deleting user');
-      } else {
-          console.log(`User '${username}' deleted`);
-          res.send(`User '${username}' deleted`);
-      }
+      }else {
+        if (result.changedRows  === 0) {
+          console.log(`User '${username}' already deleted or incorrect username`);
+          res.send(`Either your user is already deleted or you typed the wrong username`);
+        } else {
+          console.log(`User '${username}' deactivated`);
+          res.send(`User '${username}' deactivated`);
+        }
+    }
+    
   });
 });
 
@@ -293,14 +302,20 @@ app.post('/deactivate', (req, res) => {
   const sql = `UPDATE USERS SET APPROVED = 0 WHERE username=?;`;
   connection.query(sql, [username], (err, result) => {
       if (err) {
-          console.error('Error deleting user:', err);
-          res.status(500).send('Error deleting user');
+          console.error('Error updating user:', err);
+          res.status(500).send('Error updating user');
       } else {
-          console.log(`User '${username}' deleted`);
-          res.send(`User '${username}' deleted`);
+          if (result.changedRows  === 0) {
+            console.log(`User '${username}' not found or incorrect username`);
+            res.send(`Either your user doesn't exist or you typed the wrong username`);
+          } else {
+            console.log(`User '${username}' deactivated`);
+            res.send(`User '${username}' deactivated`);
+          }
       }
   });
 });
+
 
 
 
